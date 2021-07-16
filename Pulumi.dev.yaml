@@ -1,0 +1,3 @@
+config:
+  k8s-pulumi:datadog_api_key:
+    secure: AAABABVBvyajLDxB6OPwIEAEkyKd6HmPWoUBEU4bpCnc+hFo5/yMO2BhS14gVTBf+Bt0HPuKs0dUSPYSdp9/5g==

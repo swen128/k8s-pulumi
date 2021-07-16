@@ -1,3 +1,3 @@
-import {kubeConfig} from './src/rollouts-demo'
+import {kubeConfig} from './src/datadog'
 
 export {kubeConfig}

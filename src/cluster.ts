@@ -5,7 +5,31 @@ const provider = new gcp.Provider("provider", {project: 'kubernetes-309113'})
 export const cluster = new gcp.container.Cluster("pulumi-trial", {
   location: 'us-central1-a',
   initialNodeCount: 1,
+  removeDefaultNodePool: true,
 }, {provider})
+
+const nodePool = new gcp.container.NodePool(`primary-node-pool`, {
+  cluster: cluster.name,
+  initialNodeCount: 2,
+  location: cluster.location,
+  nodeConfig: {
+    preemptible: true,
+    machineType: "n1-standard-1",
+    oauthScopes: [
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.read_only",
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ],
+  },
+  management: {
+    autoRepair: true,
+    autoUpgrade: true,
+  },
+}, {
+  dependsOn: [cluster],
+  provider,
+});
 
 // https://github.com/pulumi/kubernetes-guides/blob/master/orig/gcp/infrastructure/index.ts
 //
